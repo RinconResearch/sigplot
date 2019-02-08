@@ -55,6 +55,7 @@
     sigplot.Layer2D = Layer2D;
     sigplot.version = version;
 
+    /**************************************************************************/
     /**
      * Text of the keypress help dialog.
      *
@@ -83,6 +84,7 @@
         "F       - Toggle fullscreen.\n" +
         "Cntrl+I - Invert colors.";
 
+    /**************************************************************************/
     /**
      * Text of the main help dialog.
      *
@@ -93,6 +95,7 @@
         "To unzoom, press right mouse (RM).  Press the middle mouse (MM) button or press the 'M' key to open the main menu." +
         "View the function of all keypresses by selecting 'Keypress Info' from the main menu.";
 
+    /**************************************************************************/
     /**
      * Options used when displaying the spinner.
      *
@@ -117,6 +120,7 @@
         left: 'auto' // Left position relative to parent in px
     };
 
+    /**************************************************************************/
     /**
      * Attempts basic checks to determine if the browser is compatible with
      * sigplot.
@@ -137,8 +141,7 @@
         return (hascanvas && hasarraybuf);
     };
 
-
-
+    /**************************************************************************/
     /**
      * Construct and render a plot.
      *
@@ -343,6 +346,7 @@
 
         this._refresh(); // Draw immediately
 
+        /**********************************************************************/
         this.onmousemove = (function(plot) {
             return function(e) {
                 var Mx = plot._Mx;
@@ -423,6 +427,7 @@
 
         mx.addEventListener(Mx, "mousemove", this.throttledOnMouseMove, false);
 
+        /**********************************************************************/
         this.onmouseout = (function(plot) {
             return function(event) {
                 var Gx = plot._Gx;
@@ -442,8 +447,10 @@
                 }
             };
         }(this));
+
         mx.addEventListener(Mx, "mouseout", this.onmouseout, false);
 
+        /**********************************************************************/
         this.onmouseover = (function(plot) {
             return function(event) {
                 var Gx = plot._Gx;
@@ -457,8 +464,10 @@
                 }
             };
         }(this));
+
         mx.addEventListener(Mx, "mouseover", this.onmouseover, false);
 
+        /**********************************************************************/
         this.onmousedown = (function(plot) {
             return function(event) {
                 event.preventDefault(); // mouse down on the canvas should never do a browser default action
@@ -679,8 +688,10 @@
                 return false;
             };
         }(this));
+
         mx.addEventListener(Mx, "mousedown", this.onmousedown, false);
 
+        /**********************************************************************/
         // Putting a finger on the screen and moving it, simulates
         // pan.
         this.ontouchstart = (function(plot) {
@@ -726,6 +737,7 @@
 
         mx.addEventListener(Mx, "touchstart", this.ontouchstart, false);
 
+        /**********************************************************************/
         this.ontouchmove = (function(plot) {
             return function(event) {
                 var Mx = plot._Mx;
@@ -831,6 +843,7 @@
 
         mx.addEventListener(Mx, "touchmove", this.throttledOnTouchMove, false);
 
+        /**********************************************************************/
         this.ontouchend = (function(plot) {
             return function(event) {
                 var Gx = plot._Gx;
@@ -857,6 +870,7 @@
 
         mx.addEventListener(Mx, "touchend", this.ontouchend, false);
 
+        /**********************************************************************/
         this.docMouseUp = (function(plot) {
             return function(event) {
                 var Gx = plot._Gx;
@@ -885,8 +899,10 @@
                 return false;
             };
         }(this));
+
         document.addEventListener("mouseup", this.docMouseUp, false);
 
+        /**********************************************************************/
         this.mouseup = (function(plot) {
             return function(event) {
                 event.preventDefault(); // mouse up on the canvas should never do a browser default action
@@ -991,6 +1007,7 @@
 
         mx.addEventListener(Mx, "mouseup", this.mouseup, false);
 
+        /**********************************************************************/
         this.mouseclick = (function(plot) {
             return function(event) {
                 event.preventDefault(); // alway prevent any default browser actions on the plot
@@ -1014,8 +1031,10 @@
                 return false;
             };
         }(this));
+
         mx.addEventListener(Mx, "click", this.mouseclick, false);
 
+        /**********************************************************************/
         this.mousedblclick = (function(plot) {
             return function(event) {
                 event.preventDefault(); // alway prevent any default browser actions on the plot
@@ -1039,8 +1058,10 @@
                 return false;
             };
         }(this));
+
         mx.addEventListener(Mx, "dblclick", this.mousedblclick, false);
 
+        /**********************************************************************/
         // PANBAR DRAGGING mouse event handlers:
         this.dragMouseDownHandler = (function(plot) {
             return function(event) {
@@ -1085,8 +1106,10 @@
                 }
             };
         }(this));
+
         window.addEventListener("mousedown", this.dragMouseDownHandler, false);
 
+        /**********************************************************************/
         this.dragMouseMoveHandler = (function(plot) {
             return function(e) {
                 var Gx = plot._Gx;
@@ -1109,6 +1132,7 @@
         window.addEventListener("mousemove", this.throttledDragOnMouseMove,
             false);
 
+        /**********************************************************************/
         this.dragMouseUpHandler = (function(plot) {
             return function(event) {
                 var Gx = plot._Gx;
@@ -1119,8 +1143,10 @@
                 }
             };
         }(this));
+
         window.addEventListener("mouseup", this.dragMouseUpHandler, false);
 
+        /**********************************************************************/
         // TODO this may need to be throttled or debounced
         this.onresize = (function(plot) {
             return function(event) {
@@ -1130,6 +1156,9 @@
             };
         }(this));
 
+        window.addEventListener("resize", this.onresize, false);
+
+        /**********************************************************************/
         // Mouse Wheel logic
         this.wheelHandler = (function(plot) {
 
@@ -1213,8 +1242,7 @@
 
         window.addWheelListener(window, this.wheelHandler, false);
 
-        window.addEventListener("resize", this.onresize, false);
-
+        /**********************************************************************/
         // If multiple plots are in the same window, then it
         // may be desired to disable keypress behavior and implement
         // it at a higher-level...by default keypress behavior
@@ -1393,10 +1421,12 @@
         return this;
     };
 
+    /**************************************************************************/
     // Public methods
 
     Plot.prototype = { /** @lends Plot **/
 
+        /**********************************************************************/
         /**
          * Add a plugin to the plot
          *
@@ -1436,6 +1466,7 @@
             this.refresh();
         },
 
+        /**********************************************************************/
         /**
          * Removes a plugin from the plot
          *
@@ -1462,6 +1493,7 @@
             this.refresh();
         },
 
+        /**********************************************************************/
         /**
          * Adds a listener to plot events.
          *
@@ -1519,6 +1551,7 @@
             mx.addEventListener(Mx, what, callback, false);
         },
 
+        /**********************************************************************/
         /**
          * Removes a listener to plot events.
          *
@@ -1531,6 +1564,7 @@
             mx.removeEventListener(Mx, what, callback, false);
         },
 
+        /**********************************************************************/
         /**
          * Change one or more plot settings. For boolean types, passing null
          * will toggle the setting.
@@ -2039,6 +2073,7 @@
             }
         },
 
+        /**********************************************************************/
         /**
          * Reread all files and refresh the plot.
          */
@@ -2074,6 +2109,7 @@
             mx.dispatchEvent(this._Mx, evt);
         },
 
+        /**********************************************************************/
         /**
          * Placeholder for cleanup logic.
          */
@@ -2081,6 +2117,7 @@
             // TODO not sure what we really want to do here yet
         },
 
+        /**********************************************************************/
         /**
          * Reload data without adjusting other aspects about a plot
          *
@@ -2120,6 +2157,7 @@
 
         },
 
+        /**********************************************************************/
         rescale: function() {
             var Mx = this._Mx;
 
@@ -2132,6 +2170,7 @@
             this.refresh();
         },
 
+        /**********************************************************************/
         /**
          * Change the file header
          *
@@ -2145,6 +2184,7 @@
             this.push(n, [], hdrmod);
         },
 
+        /**********************************************************************/
         /**
          * Push data into a layer that was created with overlay_pipe
          *
@@ -2209,6 +2249,7 @@
             }
         },
 
+        /**********************************************************************/
         /**
          * Create a plot layer with an array overlay
          *
@@ -2243,13 +2284,13 @@
          * @returns data_layer
          *
          */
-
         overlay_array: function(data, overrides, layerOptions) {
             m.log.debug("Overlay array");
             var hcb = m.initialize(data, overrides);
             return this.overlay_bluefile(hcb, layerOptions);
         },
 
+        /**********************************************************************/
         /**
          * Create a plot layer to hold data
          *
@@ -2281,7 +2322,6 @@
          * @returns data_layer
          *
          */
-
         overlay_pipe: function(overrides, layerOptions) {
             m.log.debug("Overlay pipe");
             if (!overrides) {
@@ -2293,6 +2333,7 @@
             return this.overlay_bluefile(hcb, layerOptions);
         },
 
+        /**********************************************************************/
         /**
          * Create a plot layer to hold data
          *
@@ -2325,7 +2366,6 @@
          * @returns data_layer
          *
          */
-
         overlay_websocket: function(wsurl, overrides, layerOptions) {
             m.log.debug("Overlay websocket: " + wsurl);
             var ws = new WebSocket(wsurl, "plot-data");
@@ -2364,6 +2404,7 @@
             return layer_n;
         },
 
+        /**********************************************************************/
         /**
          * Create a plot layer from an HREF that points to a BLUEFILE or MATFILE
          *
@@ -2431,6 +2472,7 @@
             }
         },
 
+        /**********************************************************************/
         show_spinner: function() {
             if (!this._Gx.spinner) {
                 SPINNER_OPTS.color = this._Mx.xwfg;
@@ -2438,6 +2480,7 @@
             }
         },
 
+        /**********************************************************************/
         hide_spinner: function() {
             if (this._Gx.spinner) {
                 this._Gx.spinner.stop();
@@ -2445,6 +2488,7 @@
             this._Gx.spinner = undefined;
         },
 
+        /**********************************************************************/
         add_layer: function(layer) {
             var Gx = this._Gx;
             var Mx = this._Mx;
@@ -2464,6 +2508,7 @@
             }
         },
 
+        /**********************************************************************/
         /**
          * Get a layer of the plot
          *
@@ -2475,7 +2520,6 @@
          * @returns data_layer
          *
          */
-
         get_layer: function(n) {
             var Gx = this._Gx;
             if ((n >= 0) && (n < Gx.lyr.length)) {
@@ -2485,11 +2529,13 @@
             }
         },
 
+        /**********************************************************************/
         overlay_matfile: function(mfile, layerOptions) {
             m.log.debug("Overlay matfile: " + mfile.file_name);
             return this.overlay_array(mfile.dview);
         },
 
+        /**********************************************************************/
         /**
          * Create a plot layer backed by a bluefile header
          *
@@ -2606,6 +2652,7 @@
             return (Gx.HCB.length - 1);
         },
 
+        /**********************************************************************/
         /**
          * Load one or more files.
          *
@@ -2626,6 +2673,7 @@
             }
         },
 
+        /**********************************************************************/
         /**
          * Reemove layers
          *
@@ -2638,7 +2686,6 @@
          * @returns data_layer
          *
          */
-
         deoverlay: function(index) {
             var Gx = this._Gx;
             var Mx = this._Mx;
@@ -2664,6 +2711,7 @@
             }
         },
 
+        /**********************************************************************/
         /**
          * Remove a layer.
          *
@@ -2707,6 +2755,7 @@
             mx.dispatchEvent(this._Mx, evt);
         },
 
+        /**********************************************************************/
         /**
          * Zoom onto a given pixel range.
          */
@@ -2717,6 +2766,7 @@
             this.zoom(r1, r2, continuous);
         },
 
+        /**********************************************************************/
         percent_zoom: function(xperc, yperc, continuous) {
             var Mx = this._Mx;
             var Gx = this._Gx;
@@ -2746,6 +2796,7 @@
             this.zoom(ul, lr, continuous);
         },
 
+        /**********************************************************************/
         /**
          * Zoom onto a given region.
          *
@@ -2845,6 +2896,7 @@
             this.refresh();
         },
 
+        /**********************************************************************/
         /**
          * Unzoom one or more levels.
          *
@@ -2898,6 +2950,7 @@
             this.refresh();
         },
 
+        /**********************************************************************/
         /**
          * Register this plot to mimic zoom/unzoom of other plot
          *
@@ -3025,7 +3078,7 @@
             this.mimicListeners.other = other;
         },
 
-
+        /**********************************************************************/
         /**
          * Unregister zoom/unzoom listeners added via previous call to unmimic.
          */
@@ -3050,6 +3103,7 @@
             };
         },
 
+        /**********************************************************************/
         /**
          * Like refresh, but doesn't rerender data
          *
@@ -3083,6 +3137,7 @@
             }
         },
 
+        /**********************************************************************/
         /**
          * Refresh the entire plot
          *
@@ -3098,10 +3153,10 @@
             });
         },
 
+        /**********************************************************************/
         /**
          * Enable listeners for events on plot
          */
-
         enable_listeners: function() {
             var Mx = this._Mx;
             mx.addEventListener(Mx, "mousedown", this.onmousedown, false);
@@ -3121,10 +3176,10 @@
             window.addEventListener("keypress", this.onkeypress, false);
         },
 
+        /**********************************************************************/
         /**
          * Enable listeners for events on plot
          */
-
         disable_listeners: function() {
             var Mx = this._Mx;
 
@@ -3148,11 +3203,14 @@
             window.removeEventListener("keypress", this.onkeypress, false);
         },
 
+        /**********************************************************************/
         checkresize: function() {
             if (mx.checkresize(this._Mx)) {
                 this.refresh();
             }
         },
+
+        /**********************************************************************/
         addColorMaps: function(colormaps) {
             colormaps.forEach(function(cmap) {
                 if (cmap.hasOwnProperty("name")) {
@@ -3163,6 +3221,7 @@
 
         },
 
+        /**********************************************************************/
         /**
          * Display an xCut
          *
@@ -3305,6 +3364,7 @@
             }
         },
 
+        /**********************************************************************/
         /**
          * Display an yCut
          *
@@ -3349,7 +3409,6 @@
                     drawmode: "undefined",
                     autol: -1
                 });
-
 
                 var cx = ((Gx.lyr.length > 0) && Gx.lyr[0].cx);
                 if (Gx.cmode === 1) {
@@ -3452,6 +3511,7 @@
             }
         },
 
+        /**********************************************************************/
         _refresh: function() {
             var Mx = this._Mx;
             var Gx = this._Gx;
@@ -3783,10 +3843,7 @@
 
             draw_accessories(this, 4);
 
-
-
             draw_plugins(this);
-
 
             Gx.cross_xpos = undefined;
             Gx.cross_ypos = undefined;
@@ -3804,6 +3861,7 @@
 
     };
 
+    /**************************************************************************/
     // /////////////////////////////////////////////////////////////////////////
     // Private methods and objects
     // /////////////////////////////////////////////////////////////////////////
@@ -3824,8 +3882,7 @@
      */
     var cam = ["(absc)", "(indx)", "(1/ab)", "(dydx)"];
 
-
-
+    /**************************************************************************/
     /**
      * This object holds the data associated with layers in the plot.
      *
@@ -3866,6 +3923,7 @@
         this.options = {};
     }
 
+    /**************************************************************************/
     /**
      * The graphics structure object used to hold state about the plot.
      *
@@ -4056,6 +4114,7 @@
         this.old_autol = undefined;
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -4103,6 +4162,7 @@
         mx.colormap(Mx, m.Mc.colormap[Gx.cmap].colors, Gx.ncolors);
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -4124,6 +4184,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -4142,11 +4203,10 @@
             } else {
                 mx.message(Mx, "Time = UNK");
             }
-
         }
-
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -4166,6 +4226,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -4185,6 +4246,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * Constructs a menu for updating the pan scale of the plot.
      *
@@ -4232,6 +4294,7 @@
         });
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -5955,6 +6018,7 @@
         mx.menu(Mx, MAINMENU);
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -6456,7 +6520,7 @@
         mx.menu(Mx, LEGEND_TRACE);
     }
 
-
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -6515,6 +6579,7 @@
         };
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -6994,6 +7059,7 @@
         Gx.initialized = true;
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7025,6 +7091,7 @@
         // }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7047,6 +7114,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7087,6 +7155,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7209,6 +7278,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7228,6 +7298,7 @@
         }
     }
 
+    /**************************************************************************/
     function draw_pcut_x(plot) {
         var Mx = plot._Mx;
         var Gx = plot._Gx;
@@ -7278,6 +7349,7 @@
         ctx.stroke();
     }
 
+    /**************************************************************************/
     function draw_pcut_y(plot) {
         var Mx = plot._Mx;
         var Gx = plot._Gx;
@@ -7334,6 +7406,7 @@
         ctx.stroke();
     }
 
+    /**************************************************************************/
     function draw_layers(plot) {
         var layers = plot._Gx.lyr;
         for (var n = 0; n < layers.length; n++) {
@@ -7344,6 +7417,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * Draws the specified layer.
      *
@@ -7376,6 +7450,7 @@
         mx.dispatchEvent(Mx, evt);
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7414,6 +7489,8 @@
             Gx.panymax = -1.0;
         }
     }
+
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7491,6 +7568,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7522,6 +7600,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7561,6 +7640,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7595,6 +7675,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7679,6 +7760,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7736,6 +7818,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -7908,6 +7991,7 @@
         return SIGPLOT_PAN;
     }
 
+    /**************************************************************************/
     /**
      * Direct method to handle the dragging of a scrollbar.
      *
@@ -7989,6 +8073,7 @@
         plot.refresh();
     }
 
+    /**************************************************************************/
     /**
      * Method to update plot range based on a drag event. Takes the mouse offset
      * introduced by the drag and adds a scale factor.
@@ -8058,6 +8143,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8111,6 +8197,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8130,6 +8217,7 @@
         window.addEventListener("keypress", plot.onkeypress, false);
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8153,6 +8241,7 @@
         window.removeEventListener("keypress", plot.onkeypress, false);
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8346,9 +8435,9 @@
             draw_pcut_y(plot);
             draw_pcut_x(plot);
         }
-
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8472,6 +8561,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8488,6 +8578,7 @@
         return ret;
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8496,6 +8587,7 @@
         return (x >= rect_x && x <= rect_x + rect_width && y >= rect_y && y <= rect_y + rect_height);
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8527,9 +8619,9 @@
         */
 
         return (u >= 0 && v >= 0 && u + v < 1);
-
     }
 
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8603,7 +8695,7 @@
         };
     }
 
-
+    /**************************************************************************/
     /**
      * @memberOf sigplot
      * @private
@@ -8639,6 +8731,7 @@
         };
     }
 
+    /**************************************************************************/
     /**
      * Returns true if position is within the given scrollbar's area. Depends on
      * mx.scroll_real2pix method.
@@ -8686,6 +8779,7 @@
         }
     }
 
+    /**************************************************************************/
     /**
      * Performs the middle-click scroll-menu action specified on the plot.
      *
@@ -8737,9 +8831,9 @@
         evt.ymax = Mx.stk[Mx.level].ymax;
         mx.dispatchEvent(Mx, evt); // TODO should we allow pan to be cancelled?
         this.inPan = false;
-
     }
 
+    /**************************************************************************/
     /**
      * Updates a plot's viewbox along a given axis to the provided min and max
      * values.
